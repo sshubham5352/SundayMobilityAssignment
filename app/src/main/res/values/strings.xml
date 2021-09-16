@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">SM Assignment</string>
+    <string name="n_a">N/A</string>
+    <string name="countries">Countries</string>
+    <string name="sort">Sort</string>
+    <string name="sort_by_last_name">Sort by last name</string>
+    <string name="sort_by_first_name">Sort by first name</string>
+    <string name="players">Players</string>
+    <string name="captain">Captain</string>
+
+    <string-array name="countries">
+        <item>"India"</item>
+        <item>"Australia"</item>
+        <item>"New Zealand"</item>
+        <item>"Pakistan"</item>
+        <item>"England"</item>
+        <item>"South Africa"</item>
+        <item>"Sri Lanka"</item>
+        <item>"West Indies"</item>
+        <item>"Bangladesh"</item>
+        <item>"Afghanistan"</item>
+
+    </string-array>
+</resources>
