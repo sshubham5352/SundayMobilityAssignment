@@ -67,12 +67,13 @@ class MainActivity : AppCompatActivity(), ApiResponse, CountryAdapter.OnCountryI
             9 -> playersResponse?.westIndies
             else -> null
         }
-        startPlayersActivity(players)
+        startPlayersActivity(players, countryNames[position])
     }
 
-    private fun startPlayersActivity(players: List<Player>?) {
+    private fun startPlayersActivity(players: List<Player>?, countryName: String) {
         val intent = Intent(this, PlayersActivity::class.java)
-        intent.putExtra(Constants.PLAYERS_ACTIVITY, players as Serializable)
+        intent.putExtra(Constants.PLAYERS_LIST, players as Serializable)
+        intent.putExtra(Constants.COUNTRY_NAME, countryName)
         startActivity(intent)
     }
 }

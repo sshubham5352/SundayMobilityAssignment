@@ -25,8 +25,11 @@ class PlayersActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar.root)
 
         //retrieving data from intent
-        playersList = intent.getSerializableExtra(Constants.PLAYERS_ACTIVITY) as List<Player>
+        playersList = intent.getSerializableExtra(Constants.PLAYERS_LIST) as List<Player>
+        val countryName = intent.extras?.getString(Constants.COUNTRY_NAME)
+        binding.countryName.text = countryName
 
+        //init Players recyclerView
         binding.recyclerViewPlayers.apply {
             layoutManager = LinearLayoutManager(this@PlayersActivity)
             adapter = mAdapter

@@ -32,5 +32,9 @@ data class Player(
 ) : Serializable {
 
     val lastName: String
-        get() = name.split(" ")[1]
+        get() = try {
+            (name.split(" ")[1])
+        } catch (e: IndexOutOfBoundsException) {
+            " "  // for players without last name
+        }
 }

@@ -7,6 +7,7 @@
     <string name="sort_by_first_name">Sort by first name</string>
     <string name="players">Players</string>
     <string name="captain">Captain</string>
+    <string name="country_name">Country_name</string>
 
     <string-array name="countries">
         <item>"India"</item>
