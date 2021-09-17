@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import java.io.Serializable
 
 class MainActivity : AppCompatActivity(), ApiResponse, CountryAdapter.OnCountryItemClickListener {
     //class level fields
+    private lateinit var binding: ActivityMainBinding
     private val apiManager by lazy {
         ApiManager(this)
     }
@@ -25,31 +27,47 @@ class MainActivity : AppCompatActivity(), ApiResponse, CountryAdapter.OnCountryI
         resources.getStringArray(R.array.countries).toList().sortedBy { it }
     }
     private var playersResponse: Countries? = null
+    private val progressDialog by lazy {
+        AlertDialog.Builder(this)
+            .setView(R.layout.progress_bar)
+            .setCancelable(false)
+            .setMessage("Please wait...")
+            .create()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil
-            .setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar.root)
 
-        //setting recyclerView
-        binding.recyclerViewCountries.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = CountryAdapter(countryNames, this@MainActivity)
-            setHasFixedSize(true)
-        }
         //fetching data
-        apiManager.getPlayers()
+        if (Helper.isOnline(this)) {
+            progressDialog.show()
+            apiManager.getPlayers()
+        } else
+            Toast.makeText(this, "No internet connection.", Toast.LENGTH_LONG).show()
     }
 
     override fun onCallResponse(response: Any) {
         playersResponse = response as Countries
+        if (playersResponse == null)
+            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show()
+        else {
+            //setting recyclerView
+            binding.recyclerViewCountries.apply {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                adapter = CountryAdapter(countryNames, this@MainActivity)
+                setHasFixedSize(true)
+            }
+        }
+        progressDialog.dismiss()
     }
 
     override fun onCallFailure(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        Log.d(Constants.MAIN_ACTIVITY, "onCallFailure $message")
+        Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show()
+        Log.d(Constants.MAIN_ACTIVITY, "Please Check $message")
+        progressDialog.dismiss()
     }
 
     //onRecyclerViewItemCLick
