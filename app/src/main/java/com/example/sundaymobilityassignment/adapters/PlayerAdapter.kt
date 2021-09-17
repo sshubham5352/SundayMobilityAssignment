@@ -22,7 +22,7 @@ class PlayerAdapter :
     }
 
     fun sortByFirstName() {
-        submitList(currentList.sortedBy { it.name })
+        submitList(currentList.sortedBy { it.name.toLowerCase() })
     }
 
     fun sortByLastName() {
