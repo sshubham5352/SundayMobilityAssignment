@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sundaymobilityassignment.databinding.PlayerItemBinding
 import com.example.sundaymobilityassignment.models.Player
+import java.util.*
 
 class PlayerAdapter :
     ListAdapter<Player, PlayerAdapter.ViewHolder>(PlayersDiffCallback()) {
@@ -22,7 +23,7 @@ class PlayerAdapter :
     }
 
     fun sortByFirstName() {
-        submitList(currentList.sortedBy { it.name.toLowerCase() })
+        submitList(currentList.sortedBy { it.name.toLowerCase(Locale.ROOT) })
     }
 
     fun sortByLastName() {
